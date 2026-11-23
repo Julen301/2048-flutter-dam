@@ -1,17 +1,42 @@
-# dosmilcuarentayocho
+# 2048 en Flutter
 
-A new Flutter project.
+Práctica de **Acceso a datos** (sqflite + shared_preferences) y **Desarrollo de interfaces** (pantallas, navegación, gestos y widgets reutilizables).
 
-## Getting Started
+## Cómo ejecutarlo
 
-This project is a starting point for a Flutter application.
+```bash
+flutter create . --platforms=android   # genera la carpeta android/ si no existe
+flutter pub get
+flutter run                            # en emulador o dispositivo Android
+flutter test                           # tests de la lógica del juego
+```
 
-A few resources to get you started if this is your first Flutter project:
+> Si `flutter create .` genera `test/widget_test.dart`, borradlo: hace referencia a `MyApp`, que no existe en este proyecto.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+> sqflite no funciona en web sin configuración extra: usad un emulador Android.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Estructura de carpetas
+
+```
+lib/
+├── main.dart            # Arranque: carga preferencias y sesión antes de runApp
+├── app.dart             # MaterialApp (theme, darkTheme, themeMode, rutas)
+├── routes.dart          # Rutas con nombre centralizadas (onGenerateRoute)
+├── models/              # Clases modelo con toMap()/fromMap()
+├── data/                # DatabaseHelper (singleton) y DAOs
+├── services/            # PreferenciasService, AuthService
+├── state/               # TemaController, SesionController, AppScope
+├── game/                # Lógica pura del 2048 (sin Flutter)
+├── theme/               # app_theme.dart: colores, tamaños, espaciados
+├── screens/             # Una pantalla por archivo
+├── widgets/             # Widgets reutilizables, uno por archivo
+└── utils/               # Formateo de fechas y duraciones
+```
+
+## Flujo de trabajo Git
+
+- `main`: versión entregable.
+- `develop`: integración.
+- `julen/*` y `manel/*`: una rama por tarea, se fusiona en `develop` con `--no-ff`.
+
+Documentación: carpeta [`docs/`](docs/).
