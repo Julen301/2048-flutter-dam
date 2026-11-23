@@ -49,9 +49,9 @@ abstract final class AppTextos {
   // el texto pequeño de arriba del marcador (PUNTOS, MEJOR...)
   static TextStyle etiquetaMarcador(BuildContext context) =>
       Theme.of(context).textTheme.labelMedium!.copyWith(
-        fontWeight: FontWeight.w700,
-        letterSpacing: 1.2,
-      );
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.2,
+          );
 
   // el numero del marcador
   static TextStyle valorMarcador(BuildContext context) =>
@@ -148,7 +148,7 @@ class FichasTheme extends ThemeExtension<FichasTheme> {
       celdaVacia: Color.lerp(celdaVacia, other.celdaVacia, t)!,
       fichas: List.generate(
         fichas.length,
-            (i) => Color.lerp(fichas[i], other.fichas[i], t)!,
+        (i) => Color.lerp(fichas[i], other.fichas[i], t)!,
       ),
       textoOscuro: Color.lerp(textoOscuro, other.textoOscuro, t)!,
       textoClaro: Color.lerp(textoClaro, other.textoClaro, t)!,
@@ -203,9 +203,9 @@ abstract final class AppTheme {
     // porque con los colores originales deslumbraban mucho
     final fichas = esOscuro
         ? base.map((c) {
-      final hsl = HSLColor.fromColor(c);
-      return hsl.withLightness((hsl.lightness * 0.82).clamp(0.0, 1.0)).toColor();
-    }).toList()
+            final hsl = HSLColor.fromColor(c);
+            return hsl.withLightness((hsl.lightness * 0.82).clamp(0.0, 1.0)).toColor();
+          }).toList()
         : base;
 
     final fichasTheme = FichasTheme(
