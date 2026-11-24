@@ -24,12 +24,15 @@ class StatCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.zero, // el espacio entre tarjetas ya lo pone el GridView
       child: Padding(
-        padding: const EdgeInsets.all(AppEspacios.m),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppEspacios.m,
+          vertical: AppEspacios.s + AppEspacios.xs,
+        ),
         child: Row(
           children: [
             // icono dentro de un cuadrado redondeado con el color primario suave
             Container(
-              padding: const EdgeInsets.all(AppEspacios.s + AppEspacios.xs),
+              padding: const EdgeInsets.all(AppEspacios.s),
               decoration: BoxDecoration(
                 color: esquema.primary.withValues(alpha: 0.14),
                 borderRadius: BorderRadius.circular(AppTamanos.radioFicha),

@@ -30,7 +30,7 @@ abstract final class AppTamanos {
   static const double fichaMiniatura = 44; // la ficha pequeña de las listas
   static const double fichaDetalle = 96; // la ficha grande de la pantalla detalle
   static const double iconoGrande = 72;
-  static const double altoStatCard = 88;
+  static const double altoStatCard = 96; // con el icono en su cuadrado
 
   /// Pixeles minimos que hay que arrastrar el dedo para que cuente como
   /// movimiento. Si no, un toque normal movia las fichas.
