@@ -76,7 +76,13 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 
   // al cambiar el future con setState, el AsyncDataView vuelve a cargar
-  void _recargar() => setState(() => _future = _cargar());
+  // llaves y no flecha: setState no puede devolver un Future (daria error
+  // y la pantalla no se volveria a pintar)
+  void _recargar() {
+    setState(() {
+      _future = _cargar();
+    });
+  }
 
   /// Abre la pantalla de juego.
   /// continuar = true -> sigue la partida guardada

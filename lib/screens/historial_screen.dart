@@ -54,7 +54,12 @@ class _HistorialScreenState extends State<HistorialScreen> {
     );
   }
 
-  void _recargar() => setState(() => _future = _consultar());
+  // llaves y no flecha: setState no puede devolver un Future
+  void _recargar() {
+    setState(() {
+      _future = _consultar();
+    });
+  }
 
   Future<void> _refrescar() async {
     _recargar();

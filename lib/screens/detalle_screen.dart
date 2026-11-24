@@ -81,7 +81,10 @@ class _DetalleScreenState extends State<DetalleScreen> {
       ),
       body: AsyncDataView<Partida?>(
         future: _future,
-        onReintentar: () => setState(() => _future = _cargar()),
+        // llaves: setState no puede devolver un Future
+        onReintentar: () => setState(() {
+          _future = _cargar();
+        }),
         builder: (context, partida) {
           // no hay partida con ese id
           if (partida == null) {
