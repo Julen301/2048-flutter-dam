@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
 
-/// Cajita del marcador: arriba el texto (PUNTOS, MEJOR...) y abajo el numero.
+/// Capsula del marcador: arriba el texto (PUNTOS, MEJOR...) y abajo el numero.
+/// Fondo con el degradado de marca (violeta -> cian).
 /// Se usa en la pantalla de juego y en inicio.
 class ScoreCard extends StatelessWidget {
   const ScoreCard({
@@ -21,20 +22,31 @@ class ScoreCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final esquema = Theme.of(context).colorScheme;
+    const texto = AppColores.textoSobreMarca;
     // GestureDetector para poder detectar el doble toque
     return GestureDetector(
       onDoubleTap: onDoubleTap,
       child: Container(
-        // ancho minimo para que todas las cajas midan parecido aunque el numero sea corto
-        constraints: const BoxConstraints(minWidth: 88),
+        // ancho minimo para que todas las capsulas midan parecido aunque el numero sea corto
+        constraints: const BoxConstraints(minWidth: 112),
         padding: const EdgeInsets.symmetric(
-          horizontal: AppEspacios.m,
-          vertical: AppEspacios.s,
+          horizontal: AppEspacios.l,
+          vertical: AppEspacios.s + AppEspacios.xs,
         ),
         decoration: BoxDecoration(
-          color: esquema.primaryContainer,
-          borderRadius: BorderRadius.circular(AppTamanos.radioFicha),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: AppColores.degradadoMarca,
+          ),
+          borderRadius: BorderRadius.circular(AppTamanos.radioTarjeta),
+          boxShadow: [
+            BoxShadow(
+              color: AppColores.degradadoMarca.first.withValues(alpha: 0.35),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min, // que ocupe solo lo que necesita
@@ -42,12 +54,11 @@ class ScoreCard extends StatelessWidget {
             Text(
               etiqueta.toUpperCase(),
               style: AppTextos.etiquetaMarcador(context)
-                  .copyWith(color: esquema.onPrimaryContainer),
+                  .copyWith(color: texto.withValues(alpha: 0.85)),
             ),
             Text(
               '$valor',
-              style: AppTextos.valorMarcador(context)
-                  .copyWith(color: esquema.onPrimaryContainer),
+              style: AppTextos.valorMarcador(context).copyWith(color: texto),
             ),
           ],
         ),

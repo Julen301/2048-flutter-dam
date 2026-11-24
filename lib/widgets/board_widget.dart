@@ -111,9 +111,27 @@ class _BoardWidgetState extends State<BoardWidget> {
               final ladoCelda = (constraints.maxWidth - sep * (n + 1)) / n;
               return Container(
                 padding: const EdgeInsets.all(sep),
+                // tablero tipo "consola": fondo oscuro, borde con el color de
+                // marca y un resplandor suave alrededor
+                // (el borde va en foregroundDecoration: se pinta encima y no
+                // resta espacio a las celdas, que se calculan con ladoCelda)
+                foregroundDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppTamanos.radioTablero),
+                  border: Border.all(
+                    color: AppColores.degradadoMarca.first.withValues(alpha: 0.45),
+                    width: 1.5,
+                  ),
+                ),
                 decoration: BoxDecoration(
                   color: fichas.fondoTablero,
                   borderRadius: BorderRadius.circular(AppTamanos.radioTablero),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColores.degradadoMarca.first.withValues(alpha: 0.25),
+                      blurRadius: 28,
+                      spreadRadius: 1,
+                    ),
+                  ],
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

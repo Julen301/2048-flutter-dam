@@ -4,6 +4,7 @@ import '../routes.dart';
 import '../services/auth_service.dart';
 import '../state/app_scope.dart';
 import '../theme/app_theme.dart';
+import '../widgets/titulo_juego.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -72,10 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('2048',
-                        textAlign: TextAlign.center,
-                        style: AppTextos.tituloJuego(context)),
-                    const SizedBox(height: AppEspacios.s),
+                    const TituloJuego(),
+                    const SizedBox(height: AppEspacios.l),
                     Text('Inicia sesión para jugar',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium),

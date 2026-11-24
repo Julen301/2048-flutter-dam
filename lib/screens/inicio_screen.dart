@@ -11,6 +11,7 @@ import '../utils/formato.dart';
 import '../widgets/async_data_view.dart';
 import '../widgets/confirm_dialog.dart';
 import '../widgets/score_card.dart';
+import '../widgets/titulo_juego.dart';
 
 /// Numero de cada pestaña en la NavigationBar del HomeShell.
 /// Los uso para que los botones de inicio salten a esa pestaña.
@@ -155,13 +156,15 @@ class _InicioScreenState extends State<InicioScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text('2048',
-                      textAlign: TextAlign.center,
-                      style: AppTextos.tituloJuego(context)),
+                  const TituloJuego(),
+                  const SizedBox(height: AppEspacios.m),
                   Text(
                     'Hola, ${usuario?.usuario ?? 'jugador'}',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: AppEspacios.l),
                   // Wrap por si la pantalla es estrecha y no caben en una fila
@@ -199,21 +202,27 @@ class _InicioScreenState extends State<InicioScreen> {
                       label: const Text('Nueva partida'),
                     ),
                   const SizedBox(height: AppEspacios.l),
-                  // accesos directos a las otras pestañas
-                  _BotonSeccion(
-                    icono: Icons.history,
-                    texto: 'Historial',
-                    onPressed: () => widget.onNavegar?.call(PestanasInicio.historial),
-                  ),
-                  _BotonSeccion(
-                    icono: Icons.leaderboard_outlined,
-                    texto: 'Ranking y estadísticas',
-                    onPressed: () => widget.onNavegar?.call(PestanasInicio.ranking),
-                  ),
-                  _BotonSeccion(
-                    icono: Icons.settings_outlined,
-                    texto: 'Ajustes',
-                    onPressed: () => widget.onNavegar?.call(PestanasInicio.ajustes),
+                  // accesos directos a las otras pestañas: tres tarjetas en fila
+                  Row(
+                    children: [
+                      _BotonSeccion(
+                        icono: Icons.history,
+                        texto: 'Historial',
+                        onPressed: () => widget.onNavegar?.call(PestanasInicio.historial),
+                      ),
+                      const SizedBox(width: AppEspacios.s),
+                      _BotonSeccion(
+                        icono: Icons.leaderboard_outlined,
+                        texto: 'Ranking',
+                        onPressed: () => widget.onNavegar?.call(PestanasInicio.ranking),
+                      ),
+                      const SizedBox(width: AppEspacios.s),
+                      _BotonSeccion(
+                        icono: Icons.settings_outlined,
+                        texto: 'Ajustes',
+                        onPressed: () => widget.onNavegar?.call(PestanasInicio.ajustes),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -225,8 +234,9 @@ class _InicioScreenState extends State<InicioScreen> {
   }
 }
 
-// boton con borde para ir a otra seccion. Lo saco a un widget aparte
-// porque se repetia 3 veces igual
+// tarjeta cuadrada con icono y texto para ir a otra seccion. Lo saco a un
+// widget aparte porque se repite 3 veces igual. Ya viene envuelta en
+// Expanded para que las tres midan lo mismo dentro del Row.
 class _BotonSeccion extends StatelessWidget {
   const _BotonSeccion({
     required this.icono,
@@ -240,12 +250,34 @@ class _BotonSeccion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: AppEspacios.s),
-      child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icono),
-        label: Text(texto),
+    final tema = Theme.of(context);
+    final esquema = tema.colorScheme;
+    return Expanded(
+      child: Card(
+        margin: EdgeInsets.zero,
+        clipBehavior: Clip.antiAlias, // para que el efecto del toque respete las esquinas
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: AppEspacios.m,
+              horizontal: AppEspacios.xs,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icono, color: esquema.primary),
+                const SizedBox(height: AppEspacios.s),
+                Text(
+                  texto,
+                  textAlign: TextAlign.center,
+                  style: tema.textTheme.labelLarge
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

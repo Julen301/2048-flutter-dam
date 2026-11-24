@@ -5,7 +5,7 @@
 | Pantalla | Archivo | Contenido |
 |---|---|---|
 | Login / Registro | `login_screen.dart`, `registro_screen.dart` | Formularios validados (email con `@`, contraseña mínima 6) |
-| Inicio | `inicio_screen.dart` | Título, mejor puntuación, Nueva partida, Continuar (solo si hay guardada), accesos a Historial, Ranking y Ajustes |
+| Inicio | `inicio_screen.dart` | Título con degradado, marcadores, Nueva partida, Continuar (solo si hay guardada) y tres tarjetas de acceso a Historial, Ranking y Ajustes |
 | Juego | `juego_screen.dart` | Tablero 4×4, puntos, mejor, movimientos, cronómetro, reiniciar, guardar |
 | Historial | `historial_screen.dart` | Lista con filtros por jugador y ficha mínima |
 | Detalle | `detalle_screen.dart` | Puntuación, ficha máxima, movimientos, duración, fecha, tamaño de tablero |
@@ -44,17 +44,27 @@
 | `EmptyStateView` | Stateless | Historial, Ranking, Detalle, `AsyncDataView` (errores) |
 | `AsyncDataView<T>` | Stateless | Inicio, Historial, Detalle, Ranking |
 | `ControlesDireccion` | Stateless | Juego |
+| `TituloJuego` | Stateless | Inicio, Login (cabecera «2048» con degradado) |
 
 \* `BoardWidget` solo guarda estado de interacción (desplazamiento acumulado y `FocusNode`); el estado del juego vive en `JuegoScreen`.
 
 Todos reciben datos y callbacks por constructor, tienen constructor `const` y **ninguno accede a la base de datos**.
 
-## 4. Tema y estilo
+## 4. Identidad visual «Neón nocturno» y tema
 
-- `lib/theme/app_theme.dart` concentra espaciados (`AppEspacios`), tamaños (`AppTamanos`), duraciones (`AppDuraciones`), estilos de texto (`AppTextos`) y colores de fichas (`FichasTheme`, una `ThemeExtension`).
-- Los widgets leen los colores con `Theme.of(context)` / `FichasTheme.of(context)`, así que cambian al instante al modificar el modo.
-- En modo oscuro se baja la luminosidad de las fichas y el texto de cada ficha se elige según su luminancia (oscuro sobre fichas claras, claro sobre oscuras).
-- **Animaciones**: `AnimatedContainer` (color de la ficha), `TweenAnimationBuilder` (escala al aparecer y al fusionarse), `AnimatedSize` (panel de detalles).
+Para diferenciarnos del 2048 clásico (beige y naranja) usamos una estética propia tipo arcade nocturno:
+
+- **Tablero «consola»**: índigo oscuro en los dos modos, con borde y resplandor violeta.
+- **Fichas luminosas**: degradado diagonal y, a partir del 8, un halo de su propio color que crece con el valor.
+- **Color de marca**: degradado violeta → azul turquesa (`AppColores.degradadoMarca`) en el título «2048», las cápsulas de puntuación y el tablero.
+- **Componentes**: botones en píldora de 56 px, tarjetas sin sombra con borde fino, campos rellenos, `NavigationBar` con indicador en cápsula y medallas oro/plata/bronce en el top 3 del ranking.
+- **Paletas de fichas**: Neón (por defecto), Aurora, Jade y Lava.
+
+Tema:
+
+- `lib/theme/app_theme.dart` concentra espaciados (`AppEspacios`), tamaños y radios (`AppTamanos`), duraciones (`AppDuraciones`), estilos de texto (`AppTextos`), colores de marca (`AppColores`) y colores de fichas (`FichasTheme`, una `ThemeExtension`). No hay colores escritos a mano fuera de este archivo.
+- Los widgets leen los colores con `Theme.of(context)` / `FichasTheme.of(context)`, así que cambian al instante al modificar el modo o la paleta. El texto de cada ficha se elige según su luminancia.
+- **Animaciones**: `AnimatedContainer` (color, degradado y brillo de la ficha), `TweenAnimationBuilder` (escala al aparecer y al fusionarse), `AnimatedSize` (panel de detalles).
 
 ## 5. Justificación de decisiones
 
