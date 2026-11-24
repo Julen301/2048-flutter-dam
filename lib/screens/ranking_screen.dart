@@ -48,7 +48,12 @@ class _RankingScreenState extends State<RankingScreen> {
     );
   }
 
-  void _recargar() => setState(() => _future = _cargar());
+  // llaves y no flecha: setState no puede devolver un Future
+  void _recargar() {
+    setState(() {
+      _future = _cargar();
+    });
+  }
 
   // para el RefreshIndicator (deslizar hacia abajo). Tiene que devolver un
   // Future para que la ruedita se quite cuando termine de cargar
